@@ -1,6 +1,6 @@
 #include "graphics.h"
 
-const uint8_t font[26][7] = {
+const uint8_t font[37][7] = {
     // A
     {
         0b01110,
@@ -264,7 +264,129 @@ const uint8_t font[26][7] = {
         0b10000,
         0b11111
     },
+
+    {
+        0b00100,
+        0b00100,
+        0b00100,
+        0b00100,
+        0b00100,
+        0b00000,
+        0b00100
+    },
+
+    {
+        0b11111,
+        0b10001,
+        0b11101,
+        0b10101,
+        0b11101,
+        0b00001,
+        0b11111
+    },
+
+    {
+        0b01010,
+        0b01010,
+        0b11111,
+        0b01010,
+        0b11111,
+        0b01010,
+        0b01010
+    },
+
+    {
+        0b00100,
+        0b01110,
+        0b10100,
+        0b01110,
+        0b00101,
+        0b01110,
+        0b00100
+    },
+
+    {
+        0b11001,
+        0b11001,
+        0b00010,
+        0b00100,
+        0b01000,
+        0b10011,
+        0b10011
+    },
+
+    {
+        0b00100,
+        0b01010,
+        0b00000,
+        0b00000,
+        0b00000,
+        0b00000,
+        0b00000
+    },
+
+    {
+        0b00110,
+        0b01001,
+        0b01110,
+        0b01101,
+        0b10010,
+        0b10101,
+        0b01001
+    },
+
+    {
+        0b00100,
+        0b01110,
+        0b00100,
+        0b00000,
+        0b00000,
+        0b00000,
+        0b00000
+    },
+
+    {
+        0b01000,
+        0b10000,
+        0b10000,
+        0b10000,
+        0b10000,
+        0b10000,
+        0b01000
+    },
+
+    {
+        0b00010,
+        0b00001,
+        0b00001,
+        0b00001,
+        0b00001,
+        0b00001,
+        0b00010
+    },
+
+    {
+        0b00000,
+        0b00000,
+        0b00000,
+        0b00000,
+        0b00000,
+        0b00000,
+        0b00000
+    },
 };
+const char font_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*() ";
+
+size_t get_char_index(char c)
+{
+    for (size_t i = 0; font_chars[i] != '\0'; i++)
+    {
+        if (font_chars[i] == c)
+            return i;
+    }
+
+    return 0;
+}
 
 void put_pixel(struct limine_framebuffer *fb,
                size_t x,
@@ -294,20 +416,29 @@ void draw_rect(struct limine_framebuffer *fb,
 
 
 void draw_char(struct limine_framebuffer *fb,
-            size_t letter_x,
-            size_t letter_y,
-            size_t size,
-            uint32_t color,
-            char c) 
+               size_t letter_x,
+               size_t letter_y,
+               size_t size,
+               uint32_t color,
+               char c)
 {
-    const uint8_t *letter = font[c - 'A'];
+    size_t index = get_char_index(c);
+    const uint8_t *letter = font[index];
+
     for (size_t y = 0; y < 7; y++)
     {
         for (size_t x = 0; x < 5; x++)
         {
             if (letter[y] & (1 << (4 - x)))
             {
-                draw_rect(fb, letter_x+x*10*size, letter_y+y*10*size, 10, 10, color);
+                draw_rect(
+                    fb,
+                    letter_x + x * 3 * size,
+                    letter_y + y * 3 * size,
+                    3 * size,
+                    3 * size,
+                    color
+                );
             }
         }
     }
@@ -326,7 +457,7 @@ void print(struct limine_framebuffer *fb,
 
         draw_char(
             fb,
-            x + i * 60 * letter_size,
+            x + i * 20 * letter_size,
             y,
             letter_size,
             color,

@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "limine.h"
 #include "graphics.h"
+#include "colors.h"
 
 // Set the base revision to 6, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -117,7 +118,8 @@ void kmain(void) {
     // Note: we assume the framebuffer model is RGB with 32-bit pixels.
 
     // volatile uint32_t *fb_ptr = framebuffer->address;
-    print(framebuffer, 100, 150, 0x00FFFFFF, 1, "HELLO WORLD");
+    print(framebuffer, 100, 150, WHITE, 1, "WELCOME TO TELPOS!");
+    print(framebuffer, 100, 300, CYAN, 1, "(TEXT TEST)  ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()");
 
     // We're done, just hang...
     hcf();
