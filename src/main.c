@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "limine.h"
+#include "graphics.h"
 
 // Set the base revision to 6, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -114,19 +115,9 @@ void kmain(void) {
 
     // Print a nice pattern to screen as an example.
     // Note: we assume the framebuffer model is RGB with 32-bit pixels.
-    volatile uint32_t *fb_ptr = framebuffer->address;
-    for (size_t y = 0; y < framebuffer->height; y++) {
-        for (size_t x = 0; x < framebuffer->width; x++) {
-            uint32_t nX = x * 255 / framebuffer->width;
-            uint32_t nY = y * 255 / framebuffer->height;
-            uint32_t r = x * 255 / framebuffer->width;
-            uint32_t g = y * 255 / framebuffer->height;
-            uint32_t b = 128;
 
-            fb_ptr[y * (framebuffer->pitch / 4) + x] =
-                (r << 16) | (g << 8) | b;
-                    }
-                }
+    // volatile uint32_t *fb_ptr = framebuffer->address;
+    print(framebuffer, 100, 150, 0x00FFFFFF, 1, "HELLO WORLD");
 
     // We're done, just hang...
     hcf();
