@@ -4,6 +4,7 @@
 #include "limine.h"
 #include "graphics.h"
 #include "colors.h"
+#include "console.h"
 
 // Set the base revision to 6, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -118,8 +119,10 @@ void kmain(void) {
     // Note: we assume the framebuffer model is RGB with 32-bit pixels.
 
     // volatile uint32_t *fb_ptr = framebuffer->address;
-    print(framebuffer, 100, 150, WHITE, 1, "WELCOME TO TELPOS!");
-    print(framebuffer, 100, 300, CYAN, 1, "(TEXT TEST)  ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()");
+    console_init(1, 4, 2);
+    console_clear(framebuffer);
+    println(framebuffer, "CONSOLE TEST!");
+    println(framebuffer, "NEW LINE TEST)))");
 
     // We're done, just hang...
     hcf();

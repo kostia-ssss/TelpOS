@@ -444,7 +444,7 @@ void draw_char(struct limine_framebuffer *fb,
     }
 }
 
-void print(struct limine_framebuffer *fb,
+void draw_string(struct limine_framebuffer *fb,
             size_t x,
             size_t y,
             uint32_t color,

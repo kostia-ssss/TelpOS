@@ -1,0 +1,20 @@
+#ifndef CONSOLE_H
+#define CONSOLE_H
+
+#include <stdint.h>
+#include <stddef.h>
+#include "limine.h"
+#include "graphics.h"
+#include "colors.h"
+#include <string.h>
+
+void console_init(size_t size, size_t spacing_x, size_t spacing_y);
+void println(struct limine_framebuffer *fb, char *text);
+void print(struct limine_framebuffer *fb, char *text);
+void print_at(struct limine_framebuffer *fb,
+              size_t x,
+              size_t y,
+              char *text);
+void console_clear(struct limine_framebuffer *fb);
+
+#endif
