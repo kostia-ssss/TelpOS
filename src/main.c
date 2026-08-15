@@ -125,6 +125,7 @@ void kmain(void) {
     console_clear(framebuffer);
     println(framebuffer, "CONSOLE TEST!");
     println(framebuffer, "NEW LINE TEST)))");
+    println(framebuffer, "small letters test");
 
     // We're done, just hang...
     //hcf();
