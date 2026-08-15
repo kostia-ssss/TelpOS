@@ -23,6 +23,27 @@ void console_init(size_t size, size_t spacing_x, size_t spacing_y)
     letter_spacing_y = spacing_y;
 }
 
+void putchar(struct limine_framebuffer *fb, char c)
+{
+    if (c == '\n')
+    {
+        cursor_x = 0;
+        cursor_y += letter_h;
+        return;
+    }
+
+    draw_char(
+        fb,
+        cursor_x,
+        cursor_y,
+        letter_size,
+        WHITE,
+        c
+    );
+
+    cursor_x += letter_w;
+}
+
 void print(struct limine_framebuffer *fb, char *text)
 {
     for (size_t i = 0; text[i] != '\0'; i++)

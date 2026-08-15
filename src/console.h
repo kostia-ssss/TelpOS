@@ -16,5 +16,6 @@ void print_at(struct limine_framebuffer *fb,
               size_t y,
               char *text);
 void console_clear(struct limine_framebuffer *fb);
+void putchar(struct limine_framebuffer *fb, char c);
 
 #endif

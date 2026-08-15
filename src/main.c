@@ -5,6 +5,8 @@
 #include "graphics.h"
 #include "colors.h"
 #include "console.h"
+#include "io.h"
+#include "keyboard.h"
 
 // Set the base revision to 6, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -125,5 +127,9 @@ void kmain(void) {
     println(framebuffer, "NEW LINE TEST)))");
 
     // We're done, just hang...
-    hcf();
+    //hcf();
+    while (1)
+    {
+        keyboard_handle(framebuffer);
+    }
 }
