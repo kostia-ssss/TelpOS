@@ -44,7 +44,7 @@ void putchar(struct limine_framebuffer *fb, char c)
     cursor_x += letter_w;
 }
 
-void print(struct limine_framebuffer *fb, char *text)
+void print_color(struct limine_framebuffer *fb, char *text, uint32_t color)
 {
     for (size_t i = 0; text[i] != '\0'; i++)
     {
@@ -71,13 +71,26 @@ void print(struct limine_framebuffer *fb, char *text)
             cursor_x,
             cursor_y,
             letter_size,
-            WHITE,
+            color,
             c
         );
 
         // Рухаємо курсор вправо
         cursor_x += letter_w + letter_spacing_x;
     }
+}
+
+void print(struct limine_framebuffer *fb, char *text)
+{
+    print_color(fb, text, WHITE);
+}
+
+void println_color(struct limine_framebuffer *fb, char *text, uint32_t color)
+{
+    print_color(fb, text, color);
+
+    cursor_x = 0;
+    cursor_y += letter_h + letter_spacing_y;
 }
 
 void println(struct limine_framebuffer *fb, char *text)
@@ -87,6 +100,8 @@ void println(struct limine_framebuffer *fb, char *text)
     cursor_x = 0;
     cursor_y += letter_h + letter_spacing_y;
 }
+
+
 
 void print_at(struct limine_framebuffer *fb,
               size_t x,

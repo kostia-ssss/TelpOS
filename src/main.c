@@ -7,6 +7,7 @@
 #include "console.h"
 #include "io.h"
 #include "keyboard.h"
+#include "debug.h"
 
 // Set the base revision to 6, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -123,9 +124,10 @@ void kmain(void) {
     // volatile uint32_t *fb_ptr = framebuffer->address;
     console_init(1, 4, 2);
     console_clear(framebuffer);
-    println(framebuffer, "CONSOLE TEST!");
-    println(framebuffer, "NEW LINE TEST)))");
-    println(framebuffer, "small letters test");
+    println(framebuffer, "Welcome to TelpOS!");
+    debug(framebuffer, GREEN, "TEST", "CONSOLE TEST!");
+    debug(framebuffer, BLUE, "TEST", "NEW LINE TEST)))");
+    debug(framebuffer, YELLOW, "TEST", "small letters test\n abcdefghijklmnopqrstuvwxyz");
 
     // We're done, just hang...
     //hcf();
