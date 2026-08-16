@@ -126,8 +126,9 @@ void kmain(void) {
     console_clear(framebuffer);
     println(framebuffer, "Welcome to TelpOS!");
     debug(framebuffer, GREEN, "TEST", "CONSOLE TEST!");
-    debug(framebuffer, BLUE, "TEST", "NEW LINE TEST)))");
-    debug(framebuffer, YELLOW, "TEST", "small letters test\n abcdefghijklmnopqrstuvwxyz");
+    debug(framebuffer, GREEN, "TEST", "NEW LINE TEST)))");
+    debug(framebuffer, GREEN, "TEST", "small letters test\n abcdefghijklmnopqrstuvwxyz");
+    debug(framebuffer, GREEN, "TEST", "Numbers Test 1234567890-=+/|[]{}");
 
     // We're done, just hang...
     //hcf();

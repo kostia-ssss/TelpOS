@@ -5,9 +5,8 @@ void debug(struct limine_framebuffer *fb,
            char *caption,
            char *message)
 {
-    // TODO: Replace () with []
-    print_color(fb, "(", color);
+    print_color(fb, "[", color);
     print_color(fb, caption, color);
-    print_color(fb, ") ", color);
+    print_color(fb, "] ", color);
     println_color(fb, message, color);
 }

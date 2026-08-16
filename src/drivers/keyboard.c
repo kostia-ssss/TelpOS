@@ -34,9 +34,34 @@ const char scancode_to_ascii[128] = {
     [0x15] = 'y',
     [0x2C] = 'z',
     [0x39] = ' ',
+    [0x02] = '1',
+
+    [0x03] = '2',
+    [0x04] = '3',
+    [0x05] = '4',
+    [0x06] = '5',
+
+    [0x07] = '6',
+    [0x08] = '7',
+    [0x09] = '8',
+    [0x0A] = '9',
+
+    [0x0B] = '0',
+    [0x0C] = '-',
+    [0x0D] = '=',
+    [0x4E] = '+',
+
+    [0x35] = '/',
+    [0x37] = '*',
+    [0x4A] = '-', //numpad
+    [0x1A] = '[',
+    
+    [0x1B] = ']',
+    [0x2B] = '\\',
 };
 
 int shift = 0;
+const char shift_symbols[] = "!@#$%^&*(){}";
 
 void keyboard_handle(struct limine_framebuffer *fb)
 {
@@ -71,6 +96,7 @@ void keyboard_handle(struct limine_framebuffer *fb)
         if (scancode == 0x0E)
         {
             delete_previous_char(fb);
+            return;
         }
 
         char c = scancode_to_ascii[scancode];
@@ -79,9 +105,23 @@ void keyboard_handle(struct limine_framebuffer *fb)
         {
             if (shift)
             {
-                // a → A
                 if (c >= 'a' && c <= 'z')
                     c -= 32;
+
+                if (c >= '1' && c <= '9')
+                    c = shift_symbols[c - '1'];
+
+                if (c == '0')
+                    c = ')';
+                
+                if (c == '[')
+                    c = '{';
+                
+                if (c == ']')  
+                    c = '}';
+
+                if (c == '\\')
+                    c = '|';
             }
 
             putchar(fb, c);
