@@ -1,4 +1,4 @@
-#include "graphics.h"
+#include "../graphics/graphics.h"
 
 const uint8_t font[63][7] = {
     // A

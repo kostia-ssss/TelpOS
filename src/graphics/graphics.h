@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
-#include "limine.h"
+#include "../boot/limine.h"
 
 void put_pixel(struct limine_framebuffer *fb,
             size_t x,

@@ -1,6 +1,6 @@
-#include "console.h"
-#include "graphics.h"
-#include "colors.h"
+#include "../console/console.h"
+#include "../graphics/graphics.h"
+#include "../graphics/colors.h"
 
 static size_t cursor_x;
 static size_t cursor_y;

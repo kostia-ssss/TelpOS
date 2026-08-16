@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 #include <stddef.h>
-#include "limine.h"
-#include "graphics.h"
-#include "colors.h"
+#include "../boot/limine.h"
+#include "../graphics/graphics.h"
+#include "../graphics/colors.h"
 #include <string.h>
 
 void console_init(size_t size, size_t spacing_x, size_t spacing_y);

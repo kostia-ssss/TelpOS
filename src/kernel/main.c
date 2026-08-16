@@ -1,13 +1,13 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "limine.h"
-#include "graphics.h"
-#include "colors.h"
-#include "console.h"
-#include "io.h"
-#include "keyboard.h"
-#include "debug.h"
+#include "../boot/limine.h"
+#include "../graphics/graphics.h"
+#include "../graphics/colors.h"
+#include "../console/console.h"
+#include "../drivers/io.h"
+#include "../drivers/keyboard.h"
+#include "../debug/debug.h"
 
 // Set the base revision to 6, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.

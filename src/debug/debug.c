@@ -1,4 +1,4 @@
-#include "debug.h"
+#include "../debug/debug.h"
 
 void debug(struct limine_framebuffer *fb,
            uint32_t color,

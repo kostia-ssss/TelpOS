@@ -1,4 +1,4 @@
-#include "keyboard.h"
+#include "../drivers/keyboard.h"
 
 const char scancode_to_ascii[128] = {
     [0x1E] = 'A',
