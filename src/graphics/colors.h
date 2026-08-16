@@ -8,5 +8,6 @@
 #define YELLOW 0x00FFFF00
 #define CYAN 0x0000FFFF
 #define PURPLE 0x00FF00FF
+#define BLACK 0x00000000
 
 #endif

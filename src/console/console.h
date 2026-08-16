@@ -17,7 +17,9 @@ void print_at(struct limine_framebuffer *fb,
               char *text);
 void console_clear(struct limine_framebuffer *fb);
 void putchar(struct limine_framebuffer *fb, char c);
+void putchar_color(struct limine_framebuffer *fb, char c, uint32_t color);
 void println_color(struct limine_framebuffer *fb, char *text, uint32_t color);
 void print_color(struct limine_framebuffer *fb, char *text, uint32_t color);
+void delete_previous_char(struct limine_framebuffer *fb);
 
 #endif

@@ -11,6 +11,17 @@ static size_t letter_size;
 static size_t letter_spacing_x;
 static size_t letter_spacing_y;
 
+const uint8_t char_clear[7] = {
+    0b01110,
+    0b10001,
+    0b10001,
+    0b11111,
+    0b10001,
+    0b10001,
+    0b10001
+};
+
+
 void console_init(size_t size, size_t spacing_x, size_t spacing_y)
 {
     cursor_x = 0;
@@ -23,12 +34,12 @@ void console_init(size_t size, size_t spacing_x, size_t spacing_y)
     letter_spacing_y = spacing_y;
 }
 
-void putchar(struct limine_framebuffer *fb, char c)
+void putchar_color(struct limine_framebuffer *fb, char c, uint32_t color)
 {
     if (c == '\n')
     {
         cursor_x = 0;
-        cursor_y += letter_h;
+        cursor_y += letter_h + letter_spacing_y;
         return;
     }
 
@@ -37,11 +48,16 @@ void putchar(struct limine_framebuffer *fb, char c)
         cursor_x,
         cursor_y,
         letter_size,
-        WHITE,
+        color,
         c
     );
 
-    cursor_x += letter_w;
+    cursor_x += letter_w + letter_spacing_x;
+}
+
+void putchar(struct limine_framebuffer *fb, char c)
+{
+    putchar_color(fb, c, WHITE);
 }
 
 void print_color(struct limine_framebuffer *fb, char *text, uint32_t color)
@@ -131,4 +147,21 @@ void console_clear(struct limine_framebuffer *fb)
 
     cursor_x = 0;
     cursor_y = 0;
+}
+
+void delete_previous_char(struct limine_framebuffer *fb)
+{
+    if (cursor_x < letter_w + letter_spacing_x)
+        return;
+
+    cursor_x -= letter_w + letter_spacing_x;
+
+    draw_rect(
+        fb,
+        cursor_x,
+        cursor_y,
+        letter_w,
+        letter_h,
+        BLACK
+    );
 }
