@@ -55,9 +55,15 @@ const char scancode_to_ascii[128] = {
     [0x37] = '*',
     [0x4A] = '-', //numpad
     [0x1A] = '[',
-    
+
     [0x1B] = ']',
     [0x2B] = '\\',
+    [0x28] = '\'',
+    [0x29] = '`',
+
+    [0x34] = '.',
+    [0x33] = ',',
+    [0x27] = ';',
 };
 
 int shift = 0;
@@ -122,6 +128,27 @@ void keyboard_handle(struct limine_framebuffer *fb)
 
                 if (c == '\\')
                     c = '|';
+
+                if (c == ',')
+                    c = '<';
+                
+                if (c == '.')
+                    c = '>';
+                
+                if (c == '/')
+                    c = '?';
+
+                if (c == '`')
+                    c = '~';
+                
+                if (c == '\'')
+                    c = '"';
+                
+                if (c == ';')
+                    c = ':';
+                
+                if (c == '=')
+                    c = '+';
             }
 
             putchar(fb, c);

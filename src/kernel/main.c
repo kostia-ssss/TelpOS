@@ -129,6 +129,7 @@ void kmain(void) {
     debug(framebuffer, GREEN, "TEST", "NEW LINE TEST)))");
     debug(framebuffer, GREEN, "TEST", "small letters test\n abcdefghijklmnopqrstuvwxyz");
     debug(framebuffer, GREEN, "TEST", "Numbers Test 1234567890-=+/|[]{}");
+    debug(framebuffer, GREEN, "TEST", "Specific Symbols Test \\'\"`~.,<>?;:");
 
     // We're done, just hang...
     //hcf();
