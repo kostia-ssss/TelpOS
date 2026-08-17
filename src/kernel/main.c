@@ -8,6 +8,7 @@
 #include "../drivers/io.h"
 #include "../drivers/keyboard.h"
 #include "../debug/debug.h"
+#include "../shell/shell.h"
 
 // Set the base revision to 6, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -124,6 +125,7 @@ void kmain(void) {
     // volatile uint32_t *fb_ptr = framebuffer->address;
     console_init(1, 4, 2);
     console_clear(framebuffer);
+    shell_init(framebuffer);
     println(framebuffer, "Welcome to TelpOS!");
     debug(framebuffer, GREEN, "TEST", "CONSOLE TEST!");
     debug(framebuffer, GREEN, "TEST", "NEW LINE TEST)))");

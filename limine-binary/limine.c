@@ -722,7 +722,7 @@ static int bios_install(int argc, char *argv[]) {
             }
         } else {
             if (device != NULL) { // [GPT partition index]
-                part_ndx = argv[i]; // TODO: Make this non-positional?
+                part_ndx = argv[i];
             } else if ((device = fopen(argv[i], "r+b")) == NULL) { // <device>
                 perror_wrap("error: `%s`", argv[i]);
                 return EXIT_FAILURE;

@@ -1,4 +1,4 @@
-#include "../drivers/keyboard.h"
+#include "keyboard.h"
 
 const char scancode_to_ascii[128] = {
     [0x1E] = 'a',
@@ -96,11 +96,14 @@ void keyboard_handle(struct limine_framebuffer *fb)
         if (scancode == 0x1C) // Enter
         {
             putchar(fb, '\n');
+            input_enter();
+            debug(fb, YELLOW, "INPUT TEST", input_get());
             return;
         }
 
-        if (scancode == 0x0E)
+        if (scancode == 0x0E) // Backspace
         {
+            input_backspace();
             delete_previous_char(fb);
             return;
         }
@@ -151,6 +154,7 @@ void keyboard_handle(struct limine_framebuffer *fb)
                     c = '+';
             }
 
+            input_put(c);
             putchar(fb, c);
         }
     }
