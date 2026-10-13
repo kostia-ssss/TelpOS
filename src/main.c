@@ -159,7 +159,7 @@ void kmain(void) {
             hcf();
         }
 
-        drawString(framebuffer, "WELCOME TO TELPOS", 100, 100, 0x00FFFFFF, 5);
+        println(framebuffer, "WELCOME TO TELPOS", 0x00FFFFFF);
     }
 
     // We're done, just hang...
