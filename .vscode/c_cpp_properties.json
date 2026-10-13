@@ -1,0 +1,17 @@
+
+{
+    "configurations": [
+        {
+            "name": "TelpOS",
+            "includePath": [
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/include"
+            ],
+            "compilerPath": "C:/msys64/ucrt64/bin/clang.exe",
+            "cStandard": "gnu11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-clang-x64"
+        }
+    ],
+    "version": 4
+}
