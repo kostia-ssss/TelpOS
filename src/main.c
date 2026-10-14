@@ -159,10 +159,10 @@ void kmain(void) {
         }
 
         init_text_engine(framebuffer);
-        println("WELCOME TO TELPOS", WHITE);
-        println("[({BRACKETS TEST})]", YELLOW);
-        println("0123456789 NUMBERS TEST", PURPLE);
-        debug("DEBUG TEST", "CAPTION TEST", GREEN);
+        println("Welcome to TelpOS!", WHITE);
+        debug("small letters    abcdefghijklmnopqrstuvwxyz", "TEST", GREEN);
+        debug("[{(Brackets)}]", "TEST", GREEN);
+        debug(".!? symbols test", "TEST", GREEN);
     }
 
     // We're done, just hang...
