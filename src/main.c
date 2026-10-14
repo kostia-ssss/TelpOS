@@ -157,9 +157,10 @@ void kmain(void) {
             hcf();
         }
 
-        println(framebuffer, "WELCOME TO TELPOS", 0x00FFFFFF);
-        println(framebuffer, "[({BRACKETS TEST})]", 0x00FFDD00);
-        println(framebuffer, "0123456789 NUMBERS TEST", 0x00FF00FF);
+        init_text_engine(framebuffer);
+        println("WELCOME TO TELPOS", 0x00FFFFFF);
+        println("[({BRACKETS TEST})]", 0x00FFDD00);
+        println("0123456789 NUMBERS TEST", 0x00FF00FF);
     }
 
     // We're done, just hang...

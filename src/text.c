@@ -3,9 +3,13 @@
 int cursorX = 0;
 int cursorY = 0;
 int letterSize = 3;
+struct limine_framebuffer *fb;
+
+void init_text_engine(struct limine_framebuffer *_fb) {
+    fb = _fb;
+}
 
 void draw_char_at(
-    struct limine_framebuffer *fb,
     const char (*letter)[6],
     unsigned int x,
     unsigned int y,
@@ -40,10 +44,9 @@ void draw_char_at(
 }
 
 void draw_char(
-    struct limine_framebuffer *fb,
     const char (*letter)[6],
     unsigned int color) {
-        draw_char_at(fb, letter, cursorX * 5 * (letterSize + 1), cursorY * 5 * (letterSize + 1), color);
+        draw_char_at(letter, cursorX * 5 * (letterSize + 1), cursorY * 5 * (letterSize + 1), color);
         cursorX++;
         if (cursorX > 80) {
             cursorX = 0;
@@ -52,7 +55,6 @@ void draw_char(
 }
 
 void draw_string_at(
-    struct limine_framebuffer *fb,
     const char *string,
     unsigned int x,
     unsigned int y,
@@ -73,7 +75,7 @@ void draw_string_at(
         const char (*letter)[6] = getLetter(string[i]);
 
         if (letter != 0) {
-            draw_char_at(fb, letter, curX, y, color);
+            draw_char_at(letter, curX, y, color);
         }
 
         curX += 6 * letterSize;
@@ -81,7 +83,6 @@ void draw_string_at(
 }
 
 void print(
-    struct limine_framebuffer *fb,
     const char *string,
     unsigned int color
 ) {
@@ -96,7 +97,7 @@ void print(
             const char (*letter)[6] = getLetter(string[i]);
 
             if (letter != 0) {
-                draw_char(fb, letter, color);
+                draw_char(letter, color);
             }
         }
 
@@ -108,11 +109,10 @@ void print(
 }
 
 void println(
-    struct limine_framebuffer *fb,
     const char *string,
     unsigned int color
 ) {
-    print(fb, string, color);
+    print(string, color);
     cursorX = 0;
     cursorY++;
 }
