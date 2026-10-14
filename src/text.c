@@ -116,3 +116,14 @@ void println(
     cursorX = 0;
     cursorY++;
 }
+
+void debug(
+    const char *message,
+    const char *caption,
+    unsigned int color
+) {
+    print("[", color);
+    print(caption, color);
+    print("] ", color);
+    println(message, color);
+}

@@ -4,6 +4,7 @@
 #include <limine.h>
 #include "text.h"
 #include "letters.h"
+#include "colors.h"
 
 const char (*getLetter(char c))[6] {
     unsigned char uc = (unsigned char)c;
@@ -158,9 +159,10 @@ void kmain(void) {
         }
 
         init_text_engine(framebuffer);
-        println("WELCOME TO TELPOS", 0x00FFFFFF);
-        println("[({BRACKETS TEST})]", 0x00FFDD00);
-        println("0123456789 NUMBERS TEST", 0x00FF00FF);
+        println("WELCOME TO TELPOS", WHITE);
+        println("[({BRACKETS TEST})]", YELLOW);
+        println("0123456789 NUMBERS TEST", PURPLE);
+        debug("DEBUG TEST", "CAPTION TEST", GREEN);
     }
 
     // We're done, just hang...

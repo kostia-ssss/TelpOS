@@ -1,0 +1,13 @@
+#ifndef COLORS_H
+#define COLORS_H
+
+#define WHITE 0x00FFFFFF
+#define BLACK 0x00000000
+#define RED 0x00FF0000
+#define GREEN 0x0000FF00
+#define BLUE 0x000000FF
+#define PURPLE 0x00FF00FF
+#define YELLOW 0x00FFFF00
+#define CYAN 0x0000FFFF
+
+#endif

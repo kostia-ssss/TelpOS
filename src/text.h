@@ -38,4 +38,10 @@ void println(
     unsigned int color
 );
 
+void debug(
+    const char *message,
+    const char *caption,
+    unsigned int color
+);
+
 #endif
