@@ -6,15 +6,13 @@
 #include "letters.h"
 
 const char (*getLetter(char c))[6] {
-    if (c >= 'a' && c <= 'z') {
-        c -= 'a' - 'A';
-    }
+    unsigned char uc = (unsigned char)c;
 
-    if (c < 'A' || c > 'Z') {
+    if (uc >= ASCII_SIZE) {
         return 0;
     }
 
-    return letters[c - 'A'];
+    return glyphs[uc];
 }
 
 // Set the base revision to 6, this is recommended as this is the latest
@@ -160,6 +158,8 @@ void kmain(void) {
         }
 
         println(framebuffer, "WELCOME TO TELPOS", 0x00FFFFFF);
+        println(framebuffer, "[({BRACKETS TEST})]", 0x00FFDD00);
+        println(framebuffer, "0123456789 NUMBERS TEST", 0x00FF00FF);
     }
 
     // We're done, just hang...

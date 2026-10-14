@@ -39,33 +39,6 @@ void draw_char_at(
     }
 }
 
-void draw_string_at(
-    struct limine_framebuffer *fb,
-    const char* string,
-    unsigned int x,
-    unsigned int y,
-    unsigned int color
-) {
-    if (string == 0) {
-        return;
-    }
-
-    unsigned int curX = x;
-
-    for (int i = 0; string[i] != '\0'; i++) {
-        if (string[i] == ' ') {
-            draw_char(fb, letters[26], color);
-            continue;
-        }
-
-        const char (*letter)[6] = getLetter(string[i]);
-
-        if (letter != 0) {
-            draw_char(fb, letter, color);
-        }
-    }
-}
-
 void draw_char(
     struct limine_framebuffer *fb,
     const char (*letter)[6],
@@ -78,32 +51,68 @@ void draw_char(
         }
 }
 
-void print(
+void draw_string_at(
     struct limine_framebuffer *fb,
-    const char* string,
+    const char *string,
+    unsigned int x,
+    unsigned int y,
     unsigned int color
 ) {
-    if (string == 0) 
+    if (fb == 0 || string == 0) {
         return;
+    }
+
+    unsigned int curX = x;
 
     for (int i = 0; string[i] != '\0'; i++) {
         if (string[i] == ' ') {
-            draw_char(fb, letters[26], color);
+            curX += 6 * letterSize;
             continue;
         }
 
         const char (*letter)[6] = getLetter(string[i]);
 
         if (letter != 0) {
-            draw_char(fb, letter, color);
+            draw_char_at(fb, letter, curX, y, color);
+        }
+
+        curX += 6 * letterSize;
+    }
+}
+
+void print(
+    struct limine_framebuffer *fb,
+    const char *string,
+    unsigned int color
+) {
+    if (fb == 0 || string == 0) {
+        return;
+    }
+
+    for (int i = 0; string[i] != '\0'; i++) {
+        if (string[i] == ' ') {
+            cursorX++;
+        } else {
+            const char (*letter)[6] = getLetter(string[i]);
+
+            if (letter != 0) {
+                draw_char(fb, letter, color);
+            }
+        }
+
+        if (cursorX > 80) {
+            cursorX = 0;
+            cursorY++;
         }
     }
 }
 
-void println(struct limine_framebuffer *fb,
-    const char* string,
-    unsigned int color) {
-        print(fb, string, color);
-        cursorX = 0;
-        cursorY++;
+void println(
+    struct limine_framebuffer *fb,
+    const char *string,
+    unsigned int color
+) {
+    print(fb, string, color);
+    cursorX = 0;
+    cursorY++;
 }
