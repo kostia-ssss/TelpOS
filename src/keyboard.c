@@ -80,6 +80,11 @@ char keyboard_to_ascii(uint8_t scancode) {
     if (scancode == 0x2A || scancode == 0x36) { // Shift
         shift = true;
     }
+
+    if (scancode == 0x0E) { // Backspace
+        delete_char();
+    }
+        
     
 
     char c = scancode_to_ascii[scancode];

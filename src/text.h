@@ -45,5 +45,6 @@ void debug(
 );
 
 void new_line();
+void delete_char();
 
 #endif

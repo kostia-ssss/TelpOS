@@ -1,4 +1,5 @@
 #include "text.h"
+#include "colors.h"
 
 int cursorX = 0;
 int cursorY = 0;
@@ -119,6 +120,20 @@ void println(
 ) {
     print(string, color);
     new_line();
+}
+
+void delete_char() {
+    char black[5][6] = {
+        "11111",
+        "11111",
+        "11111",
+        "11111",
+        "11111",
+    };
+
+    cursorX--;
+    draw_char(black, BLACK);
+    cursorX--;
 }
 
 void debug(
