@@ -5,6 +5,9 @@
 #include "text.h"
 #include "letters.h"
 #include "colors.h"
+#include "gdt.h"
+#include "idt.h"
+#include "keyboard.h"
 
 const char (*getLetter(char c))[6] {
     unsigned char uc = (unsigned char)c;
@@ -134,16 +137,27 @@ static void fb_pattern(struct limine_framebuffer *fb) {
     }
 }
 
+static void print_hex_byte(uint8_t value) {
+    const char hex[] = "0123456789ABCDEF";
+
+    char output[] = "Scancode: 0x00";
+
+    output[12] = hex[(value >> 4) & 0x0F];
+    output[13] = hex[value & 0x0F];
+
+    println(output, GREEN);
+}
+
 // The following will be our kernel's entry point.
 // If renaming kmain() to something else, make sure to change the
 // linker script accordingly.
 void kmain(void) {
-    // Ensure the bootloader actually understands our base revision (see spec).
     if (LIMINE_BASE_REVISION_SUPPORTED(limine_base_revision) == false) {
         hcf();
     }
 
-    // Ensure we got a framebuffer.
+    gdt_init();
+
     if (framebuffer_request.response == NULL
      || framebuffer_request.response->framebuffer_count < 1) {
         hcf();
@@ -159,11 +173,32 @@ void kmain(void) {
         }
 
         init_text_engine(framebuffer);
+        idt_init();
+
         println("Welcome to TelpOS!", WHITE);
         debug("small letters    abcdefghijklmnopqrstuvwxyz", "TEST", GREEN);
         debug("[{(Brackets)}]", "TEST", GREEN);
         debug(".!? symbols test", "TEST", GREEN);
+
+        
+        while (true) {
+            uint8_t scancode;
+
+            if (keyboard_poll(&scancode)) {
+                char c = keyboard_to_ascii(scancode);
+
+                if (c != '\0') {
+                    char output[] = " ";
+                    output[0] = c;
+                    print(output, WHITE);
+                }
+            } else {
+                __asm__ volatile ("pause");
+            }
+        }
+
     }
+    
 
     // We're done, just hang...
     hcf();
