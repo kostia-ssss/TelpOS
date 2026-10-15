@@ -1,4 +1,4 @@
-
+#include "text.h"
 #include "keyboard.h"
 #include "io.h"
 
@@ -46,6 +46,8 @@ static const char scancode_to_ascii[128] = {
     [0x39] = ' ',
 };
 
+bool shift = false;
+
 bool keyboard_poll(uint8_t *scancode) {
     if ((inb(0x64) & 1) == 0) {
         return false;
@@ -54,7 +56,7 @@ bool keyboard_poll(uint8_t *scancode) {
     uint8_t code = inb(0x60);
 
     // Ignore key-release codes in PS/2 Set 1.
-    if (code & 0x80) {
+    if ((code & 0x80) && code != 0xAA && code != 0xB6) {
         return false;
     }
 
@@ -63,9 +65,30 @@ bool keyboard_poll(uint8_t *scancode) {
 }
 
 char keyboard_to_ascii(uint8_t scancode) {
+    if (scancode == 0xAA || scancode == 0xB6) { // Shift release
+        shift = false;
+    }
+
     if (scancode >= 128) {
         return '\0';
     }
+
+    if (scancode == 0x1C) { // Enter
+        new_line();
+    }
+
+    if (scancode == 0x2A || scancode == 0x36) { // Shift
+        shift = true;
+    }
+    
+
+    char c = scancode_to_ascii[scancode];
+
+    if (shift && c >= 'a' && c <= 'z') {
+        c -= 'a' - 'A';
+    }
+
+    return c;
 
     return scancode_to_ascii[scancode];
 }

@@ -44,4 +44,6 @@ void debug(
     unsigned int color
 );
 
+void new_line();
+
 #endif

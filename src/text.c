@@ -108,13 +108,17 @@ void print(
     }
 }
 
+void new_line() {
+    cursorX = 0;
+    cursorY++;
+}
+
 void println(
     const char *string,
     unsigned int color
 ) {
     print(string, color);
-    cursorX = 0;
-    cursorY++;
+    new_line();
 }
 
 void debug(
