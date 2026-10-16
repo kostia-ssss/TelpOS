@@ -49,7 +49,7 @@ void draw_char(
     unsigned int color) {
         draw_char_at(letter, cursorX * 5 * (letterSize + 1), cursorY * 5 * (letterSize + 1), color);
         cursorX++;
-        if (cursorX > 80) {
+        if (cursorX > 64) {
             cursorX = 0;
             cursorY++;
         }
