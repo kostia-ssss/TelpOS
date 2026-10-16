@@ -104,7 +104,7 @@ void print(
             }
         }
 
-        if (cursorX > 80) {
+        if (cursorX == 64) {
             cursorX = 0;
             cursorY++;
         }

@@ -2,6 +2,7 @@
 #include "keyboard.h"
 #include "io.h"
 #include "text/colors.h"
+#include "shell/shell.h"
 
 static const char scancode_to_ascii[128] = {
     [0x02] = '1',
@@ -114,6 +115,8 @@ char keyboard_to_ascii(uint8_t scancode) {
 
     if (scancode == 0x1C) { // Enter
         new_line();
+        parse_command();
+        print("TelpOS> ", WHITE);
     }
 
     if (scancode == 0x2A || scancode == 0x36) { // Shift

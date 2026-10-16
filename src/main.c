@@ -8,6 +8,7 @@
 #include "input/gdt.h"
 #include "input/idt.h"
 #include "input/keyboard.h"
+#include "shell/shell.h"
 
 const char (*getLetter(char c))[6] {
     unsigned char uc = (unsigned char)c;
@@ -176,9 +177,7 @@ void kmain(void) {
         idt_init();
 
         println("Welcome to TelpOS!", WHITE);
-        debug("small letters    abcdefghijklmnopqrstuvwxyz", "TEST", GREEN);
-        debug("[{(Brackets)}]", "TEST", GREEN);
-        debug(".!? symbols test", "TEST", GREEN);
+        print("TelpOS > ", WHITE);
 
         
         while (true) {
@@ -188,6 +187,7 @@ void kmain(void) {
                 char c = keyboard_to_ascii(scancode);
 
                 if (c != '\0') {
+                    get_char_input(c);
                     char output[] = " ";
                     output[0] = c;
                     print(output, WHITE);
