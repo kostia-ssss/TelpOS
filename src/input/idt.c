@@ -1,8 +1,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "idt.h"
-#include "text.h"
-#include "colors.h"
+#include "text/text.h"
+#include "text/colors.h"
 
 struct idt_entry {
     uint16_t offset_low;

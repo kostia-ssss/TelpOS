@@ -1,7 +1,7 @@
-#include "text.h"
+#include "text/text.h"
 #include "keyboard.h"
 #include "io.h"
-#include "colors.h"
+#include "text/colors.h"
 
 static const char scancode_to_ascii[128] = {
     [0x02] = '1',

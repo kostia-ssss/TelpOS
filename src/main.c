@@ -2,12 +2,12 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <limine.h>
-#include "text.h"
-#include "letters.h"
-#include "colors.h"
-#include "gdt.h"
-#include "idt.h"
-#include "keyboard.h"
+#include "text/text.h"
+#include "text/letters.h"
+#include "text/colors.h"
+#include "input/gdt.h"
+#include "input/idt.h"
+#include "input/keyboard.h"
 
 const char (*getLetter(char c))[6] {
     unsigned char uc = (unsigned char)c;
