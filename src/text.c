@@ -94,6 +94,8 @@ void print(
     for (int i = 0; string[i] != '\0'; i++) {
         if (string[i] == ' ') {
             cursorX++;
+        } else if (string[i] == '\t') {
+            cursorX += 4;
         } else {
             const char (*letter)[6] = getLetter(string[i]);
 

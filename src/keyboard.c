@@ -1,6 +1,7 @@
 #include "text.h"
 #include "keyboard.h"
 #include "io.h"
+#include "colors.h"
 
 static const char scancode_to_ascii[128] = {
     [0x02] = '1',
@@ -84,6 +85,7 @@ static const char shift_symbols[128] = {
 };
 
 bool shift = false;
+bool caps = false;
 
 bool keyboard_poll(uint8_t *scancode) {
     if ((inb(0x64) & 1) == 0) {
@@ -118,6 +120,10 @@ char keyboard_to_ascii(uint8_t scancode) {
         shift = true;
     }
 
+    if (scancode == 0x3A) { // Capslock
+        caps = !caps;
+    }
+
     if (scancode == 0x0E) { // Backspace
         delete_char();
     }
@@ -126,7 +132,7 @@ char keyboard_to_ascii(uint8_t scancode) {
 
     char c = scancode_to_ascii[scancode];
 
-    if (shift) {
+    if (shift ^ caps) {
         if (c >= 'a' && c <= 'z') {
             c -= 'a' - 'A';
         }
