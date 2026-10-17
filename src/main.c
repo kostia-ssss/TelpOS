@@ -177,7 +177,7 @@ void kmain(void) {
         idt_init();
 
         println("Welcome to TelpOS!", WHITE);
-        print("TelpOS > ", WHITE);
+        print("TelpOS> ", WHITE);
 
         
         while (true) {

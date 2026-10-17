@@ -36,10 +36,18 @@ void parse_command() {
         println("Available commands:", WHITE);
         println("help", WHITE);
         println("info", WHITE);
+        println("echo", WHITE);
     }
     else if (compare(buffer, "info")) {
-        println("TelpOS v0.2.0", WHITE);
+        println("TelpOS v0.2.1", WHITE);
         println("!TelpOS is in active developement. There might be some bugs!", YELLOW);
+    }
+    else if (compare("echo", buffer)) {
+        for (int i = 5; buffer[i] != '\0'; i++)
+        {
+            draw_char(getLetter(buffer[i]), WHITE);
+        }
+        new_line();
     }
     else {
         println("Unknown command. Type 'help' to see all commands!", RED);
