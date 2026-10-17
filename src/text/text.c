@@ -1,5 +1,6 @@
 #include "text.h"
 #include "colors.h"
+#include "letters.h"
 
 int cursorX = 0;
 int cursorY = 0;
@@ -11,7 +12,7 @@ void init_text_engine(struct limine_framebuffer *_fb) {
 }
 
 void draw_char_at(
-    const char (*letter)[6],
+    const char (*letter)[GLYPH_WIDTH],
     unsigned int x,
     unsigned int y,
     unsigned int color
@@ -24,8 +25,8 @@ void draw_char_at(
     unsigned int *pixels = (unsigned int *)fb->address;
     unsigned int pitch = fb->pitch / 4;
 
-    for (unsigned int row = 0; row < 5; row++) {
-        for (unsigned int col = 0; col < 5; col++) {
+    for (unsigned int row = 0; row < GLYPH_HEIGHT; row++) {
+        for (unsigned int col = 0; col < GLYPH_WIDTH - 1; col++) {
             if (letter[row][col] != '1') {
                 continue;
             }
@@ -45,11 +46,16 @@ void draw_char_at(
 }
 
 void draw_char(
-    const char (*letter)[6],
+    const char (*letter)[GLYPH_WIDTH],
     unsigned int color) {
-        draw_char_at(letter, cursorX * 5 * (letterSize + 1), cursorY * 5 * (letterSize + 1), color);
+        draw_char_at(
+            letter,
+            cursorX * (GLYPH_WIDTH - 1 + 1) * letterSize,
+            cursorY * (GLYPH_HEIGHT + 1) * letterSize,
+            color
+        );
         cursorX++;
-        if (cursorX > 64) {
+        if (cursorX > 40) {
             cursorX = 0;
             cursorY++;
         }
@@ -69,17 +75,17 @@ void draw_string_at(
 
     for (int i = 0; string[i] != '\0'; i++) {
         if (string[i] == ' ') {
-            curX += 6 * letterSize;
+            curX += 8 * letterSize;
             continue;
         }
 
-        const char (*letter)[6] = getLetter(string[i]);
+        const char (*letter)[GLYPH_WIDTH] = getLetter(string[i]);
 
         if (letter != 0) {
             draw_char_at(letter, curX, y, color);
         }
 
-        curX += 6 * letterSize;
+        curX += 8 * letterSize;
     }
 }
 
@@ -97,14 +103,14 @@ void print(
         } else if (string[i] == '\t') {
             cursorX += 4;
         } else {
-            const char (*letter)[6] = getLetter(string[i]);
+            const char (*letter)[GLYPH_WIDTH] = getLetter(string[i]);
 
             if (letter != 0) {
                 draw_char(letter, color);
             }
         }
 
-        if (cursorX == 64) {
+        if (cursorX == 40) {
             cursorX = 0;
             cursorY++;
         }
@@ -125,12 +131,14 @@ void println(
 }
 
 void delete_char() {
-    char black[5][6] = {
-        "11111",
-        "11111",
-        "11111",
-        "11111",
-        "11111",
+    char black[7][8] = {
+        "1111111",
+        "1111111",
+        "1111111",
+        "1111111",
+        "1111111",
+        "1111111",
+        "1111111",
     };
 
     cursorX--;

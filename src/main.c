@@ -3,14 +3,13 @@
 #include <stdbool.h>
 #include <limine.h>
 #include "text/text.h"
-#include "text/letters.h"
 #include "text/colors.h"
 #include "input/gdt.h"
 #include "input/idt.h"
 #include "input/keyboard.h"
 #include "shell/shell.h"
 
-const char (*getLetter(char c))[6] {
+const char (*getLetter(char c))[GLYPH_WIDTH] {
     unsigned char uc = (unsigned char)c;
 
     if (uc >= ASCII_SIZE) {
