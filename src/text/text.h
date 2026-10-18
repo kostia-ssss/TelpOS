@@ -33,5 +33,6 @@ void println(const char *string, unsigned int color);
 void debug(const char *message, const char *caption, unsigned int color);
 void new_line(void);
 void delete_char(void);
+void clear(void);
 
 #endif

@@ -117,6 +117,22 @@ void print(
     }
 }
 
+void clear() {
+    unsigned int *pixels = (unsigned int *)fb->address;
+    unsigned int pitch = fb->pitch / 4;
+
+    for (int y = 0; y < fb->height; y++)
+    {
+        for (int x = 0; x < fb->width; x++)
+        {
+            pixels[y * pitch + x] = BLACK;
+        }
+    }
+    
+    cursorX = 0;
+    cursorY = 0;
+}
+
 void new_line() {
     cursorX = 0;
     cursorY++;

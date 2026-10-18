@@ -129,9 +129,8 @@ char keyboard_to_ascii(uint8_t scancode) {
 
     if (scancode == 0x0E) { // Backspace
         delete_char();
+        erase_from_buffer();
     }
-        
-    
 
     char c = scancode_to_ascii[scancode];
 

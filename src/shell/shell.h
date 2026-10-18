@@ -3,5 +3,6 @@
 
 void get_char_input(char c);
 void parse_command();
+void erase_from_buffer();
 
 #endif
