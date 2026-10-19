@@ -4,6 +4,7 @@
 
 #include <limine.h>
 #include "letters.h"
+#include "draw/draw.h"
 
 const char (*getLetter(char c))[GLYPH_WIDTH];
 

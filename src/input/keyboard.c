@@ -89,13 +89,16 @@ bool shift = false;
 bool caps = false;
 
 bool keyboard_poll(uint8_t *scancode) {
-    if ((inb(0x64) & 1) == 0) {
+    uint8_t status = inb(0x64);
+
+    // Немає даних або вони прийшли від миші
+    if ((status & 0x01) == 0 || (status & 0x20) != 0) {
         return false;
     }
 
     uint8_t code = inb(0x60);
 
-    // Ignore key-release codes in PS/2 Set 1.
+    // Ігноруємо коди відпускання клавіш
     if ((code & 0x80) && code != 0xAA && code != 0xB6) {
         return false;
     }

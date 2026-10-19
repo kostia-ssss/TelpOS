@@ -8,6 +8,8 @@
 #include "input/idt.h"
 #include "input/keyboard.h"
 #include "shell/shell.h"
+#include "draw/draw.h"
+#include "input/mouse.h"
 
 const char (*getLetter(char c))[GLYPH_WIDTH] {
     unsigned char uc = (unsigned char)c;
@@ -175,25 +177,79 @@ void kmain(void) {
         init_text_engine(framebuffer);
         idt_init();
 
+        draw_cursor(framebuffer->width / 2, framebuffer->height / 2);
+
         println("Welcome to TelpOS!", WHITE);
         print("TelpOS> ", WHITE);
 
+        if (mouse_init()) {
+            debug("Mouse initialized!", "MOUSE TEST", GREEN);
+        } else {
+            debug("Mouse init failed!", "MOUSE TEST", RED);
+        }
         
         while (true) {
-            uint8_t scancode;
+                        
+            int mouse_x = 0;
+            int mouse_y = 0;
 
-            if (keyboard_poll(&scancode)) {
-                char c = keyboard_to_ascii(scancode);
+            uint8_t packet[3];
+            int packet_index = 0;
 
-                if (c != '\0') {
-                    get_char_input(c);
-                    char output[] = " ";
-                    output[0] = c;
-                    print(output, WHITE);
+            while (true) {
+                uint8_t byte;
+
+                // Читаємо байти, що надійшли від миші
+                if (mouse_try_read_byte(&byte)) {
+                    if (packet_index == 0) {
+                        // Перший байт пакета має встановлений біт 3
+                        if ((byte & 0x08) == 0) {
+                            continue;
+                        }
+                    }
+
+                    packet[packet_index++] = byte;
+
+                    if (packet_index == 3) {
+                        int dx = (int)(int8_t)packet[1];
+                        int dy = (int)(int8_t)packet[2];
+
+                        mouse_x += dx;
+                        mouse_y -= dy;
+
+                        if (mouse_x < 0) mouse_x = 0;
+                        if (mouse_y < 0) mouse_y = 0;
+                        if (mouse_x >= (int)framebuffer->width)
+                            mouse_x = framebuffer->width - 1;
+                        if (mouse_y >= (int)framebuffer->height)
+                            mouse_y = framebuffer->height - 1;
+
+                        packet_index = 0;
+
+                        // Тимчасово перемальовуємо курсор у новій позиції
+                        clear_screen();
+                        draw_cursor(mouse_x, mouse_y);
+                    }
                 }
-            } else {
-                __asm__ volatile ("pause");
+
+                // Клавіатура продовжує працювати
+                uint8_t scancode;
+
+                if (keyboard_poll(&scancode)) {
+                    char c = keyboard_to_ascii(scancode);
+
+                    if (c != '\0') {
+                        get_char_input(c);
+
+                        char output[] = " ";
+                        output[0] = c;
+                        print(output, WHITE);
+                    }
+                } else {
+                    __asm__ volatile ("pause");
+                }
             }
+
         }
 
     }

@@ -1377,7 +1377,7 @@ static int bios_install(int argc, char *argv[]) {
 
         // ... nuke primary GPT + protective MBR. The reserve is the protective
         // MBR, the header, and the 16384 bytes UEFI reserves for the entry
-        // array whatever the block size -- 34 blocks at 512, 10 at 2048, 6 at
+        // array whatever the block size: 34 blocks at 512, 10 at 2048, 6 at
         // 4096. The header's own value bounds it where that is smaller, above
         // the two blocks a GPT-aware reader consults whatever the header says.
         uint64_t first_usable = ENDSWAP(gpt_header.first_usable_lba);
@@ -1999,8 +1999,8 @@ cleanup:
     return ret;
 }
 
-#define LIMINE_VERSION "12.9.3"
-#define LIMINE_COPYRIGHT "Copyright (C) 2019-2026 Mintsuki and contributors."
+#define LIMINE_VERSION "12.9.4"
+#define LIMINE_COPYRIGHT "Copyright (C) 2019-2026 Mintsuki, 2026 Kamila Szewczyk, and contributors."
 
 static void version_usage(void) {
     printf("usage: %s version [options...]\n", program_name);

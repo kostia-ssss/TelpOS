@@ -45,4 +45,4 @@ if (-not (Test-Path $ISO)) {
 
 Write-Host "`n=== 3/3: Launching TelpOS in QEMU ===" -ForegroundColor Green
 
-& $QEMU -cdrom $ISO -m 512 -boot d
+& $Bash -lc "cd '$MsysProject' && /ucrt64/bin/qemu-system-x86_64.exe -cdrom image.iso -m 512 -boot d"

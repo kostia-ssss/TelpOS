@@ -5,10 +5,9 @@
 int cursorX = 0;
 int cursorY = 0;
 int letterSize = 3;
-struct limine_framebuffer *fb;
 
 void init_text_engine(struct limine_framebuffer *_fb) {
-    fb = _fb;
+    draw_init(_fb);
 }
 
 void draw_char_at(
@@ -17,13 +16,9 @@ void draw_char_at(
     unsigned int y,
     unsigned int color
 ) {
-    if (fb == 0 || fb->address == 0 || letter == 0 ||
-        letterSize == 0 || fb->bpp != 32) {
+    if (letter == 0 || letterSize == 0) {
         return;
     }
-
-    unsigned int *pixels = (unsigned int *)fb->address;
-    unsigned int pitch = fb->pitch / 4;
 
     for (unsigned int row = 0; row < GLYPH_HEIGHT; row++) {
         for (unsigned int col = 0; col < GLYPH_WIDTH - 1; col++) {
@@ -36,9 +31,7 @@ void draw_char_at(
                     unsigned int px = x + col * letterSize + dx;
                     unsigned int py = y + row * letterSize + dy;
 
-                    if (px < fb->width && py < fb->height) {
-                        pixels[py * pitch + px] = color;
-                    }
+                    draw_pixel(px, py, color);
                 }
             }
         }
@@ -67,7 +60,7 @@ void draw_string_at(
     unsigned int y,
     unsigned int color
 ) {
-    if (fb == 0 || string == 0) {
+    if (string == 0) {
         return;
     }
 
@@ -93,7 +86,7 @@ void print(
     const char *string,
     unsigned int color
 ) {
-    if (fb == 0 || string == 0) {
+    if (string == 0) {
         return;
     }
 
@@ -118,16 +111,7 @@ void print(
 }
 
 void clear() {
-    unsigned int *pixels = (unsigned int *)fb->address;
-    unsigned int pitch = fb->pitch / 4;
-
-    for (int y = 0; y < fb->height; y++)
-    {
-        for (int x = 0; x < fb->width; x++)
-        {
-            pixels[y * pitch + x] = BLACK;
-        }
-    }
+    clear_screen();
     
     cursorX = 0;
     cursorY = 0;
