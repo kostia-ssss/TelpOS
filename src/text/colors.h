@@ -9,5 +9,6 @@
 #define PURPLE 0x00FF00FF
 #define YELLOW 0x00FFFF00
 #define CYAN 0x0000FFFF
+#define GREY 0x00AAAAAA
 
 #endif

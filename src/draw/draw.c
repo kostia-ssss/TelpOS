@@ -49,6 +49,14 @@ void draw_cursor(int x, int y) {
     }
 }
 
+void draw_rect(int x, int y, int w, int h, int color) {
+    for (int px = x; px < x + w; px++) {
+        for (int py = y; py < y + h; py++) {
+            draw_pixel(px, py, color);
+        }
+    }
+}
+
 void clear_screen() {
     unsigned int *pixels = (unsigned int *)fb->address;
     unsigned int pitch = fb->pitch / 4;

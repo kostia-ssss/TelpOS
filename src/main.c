@@ -10,6 +10,7 @@
 #include "shell/shell.h"
 #include "draw/draw.h"
 #include "input/mouse.h"
+#include "desktop/window.h"
 
 const char (*getLetter(char c))[GLYPH_WIDTH] {
     unsigned char uc = (unsigned char)c;
@@ -173,20 +174,18 @@ void kmain(void) {
         if (framebuffer->memory_model != LIMINE_FRAMEBUFFER_RGB || framebuffer->bpp != 32) {
             hcf();
         }
-
+        
+        draw_init(framebuffer);
         init_text_engine(framebuffer);
         idt_init();
 
         draw_cursor(framebuffer->width / 2, framebuffer->height / 2);
 
-        println("Welcome to TelpOS!", WHITE);
-        print("TelpOS> ", WHITE);
+        Window window = create_window(50, 40, 300, 260);
+        draw_window(window);
 
-        if (mouse_init()) {
-            debug("Mouse initialized!", "MOUSE TEST", GREEN);
-        } else {
-            debug("Mouse init failed!", "MOUSE TEST", RED);
-        }
+        println("Welcome to TgsregrselpOS!", WHITE);
+        print("TelpOS> ", WHITE);
         
         while (true) {
                         
@@ -227,8 +226,9 @@ void kmain(void) {
                         packet_index = 0;
 
                         // Тимчасово перемальовуємо курсор у новій позиції
-                        clear_screen();
-                        draw_cursor(mouse_x, mouse_y);
+                        // clear_screen();
+                        // draw_cursor(mouse_x, mouse_y);
+                        draw_window(window);
                     }
                 }
 
